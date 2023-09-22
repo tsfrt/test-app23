@@ -1,0 +1,27 @@
+---
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: test-app23
+  namespace: develop
+  labels:
+    app.kubernetes.io/part-of: test-app23
+    apps.tanzu.vmware.com/workload-type: web
+spec:
+  serviceClaims:
+  - name: oracle-binding
+    ref:
+      apiVersion: services.apps.tanzu.vmware.com/v1alpha1                
+      kind: ResourceClaim
+      name: external-oracle-db-claim
+  
+  
+  source:
+    git:
+      url: https://github.com/tsfrt/test-app23
+      ref:
+        branch: main
+  build:
+    env:
+      - name: NODE_OPTIONS
+        value: ""
