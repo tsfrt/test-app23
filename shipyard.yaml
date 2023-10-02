@@ -1,0 +1,19 @@
+apiVersion: "spec.keptn.sh/0.2.3"
+kind: "Shipyard"
+metadata:
+  name: "shipyard-svelte-app"
+spec:
+  stages:
+    - name: "production"
+      sequences:
+        - name: "delivery"
+          tasks:
+            - name: "deployment"
+              properties:
+                deploymentstrategy: "blue_green_service"
+            - name: "test"
+              properties:
+                teststrategy: "functional"
+            - name: "evaluation"
+            - name: "approval"
+            - name: "release"
