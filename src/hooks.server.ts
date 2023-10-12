@@ -1,8 +1,18 @@
 import { SvelteKitAuth, Providers } from "sk-auth"
 import * as Bindings from '@nebhale/service-bindings';
 import type { OAuth2Provider } from "sk-auth/dist/providers";
+import type { Handle } from "@sveltejs/kit";
 
-export const handle = new SvelteKitAuth({
+export const handle: Handle = async ({ event, resolve }) => {    
+  
+  
+    const response = await resolve(event);
+  
+    return response;
+  };
+
+export const appAuth = new SvelteKitAuth({
+
     providers: [await authInfo()],
     callbacks: {
         jwt(token, profile) {
@@ -26,13 +36,13 @@ export const handle = new SvelteKitAuth({
 
 
 async function authInfo(): Promise<OAuth2Provider> {
-    console.log("using @nebhale/service-bindings");
-    let b = await Bindings.fromServiceBindingRoot();
-    let ob = await Bindings.find(b, "sso-claim");
-    console.log(ob);
+    let ob = null;
+    if (process.env.SERVICE_BINDING_ROOT) {
 
 
-    const authConfig = {
+        const b = await Bindings.fromServiceBindingRoot();
+        ob = await Bindings.find(b, "sso-claim");
+        const authConfig = {
         grantTypes: await Bindings.get(ob!, 'authorization-grant-types'),
         authMethod: await Bindings.get(ob!, 'client-authentication-method'),
         clientId: await Bindings.get(ob!, 'client-id'),
@@ -46,9 +56,14 @@ async function authInfo(): Promise<OAuth2Provider> {
     console.log(authConfig);
 
     const oauthProvider = new Providers.OAuth2Provider(authConfig);
-
     return oauthProvider;
+    }
 
+    return null;
 }
+
+
+
+
 
 
