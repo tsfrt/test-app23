@@ -1,11 +1,7 @@
 import type { GetSession, RequestHandler } from "@sveltejs/kit";
 import type { EndpointOutput } from "@sveltejs/kit/types/endpoint";
-import { RequestEvent } from "@sveltejs/kit/types/hooks";
+import type { RequestEvent } from "@sveltejs/kit/types/hooks";
 import cookie from "cookie";
-import * as jsonwebtoken from "jsonwebtoken";
-import type { JWT, Session } from "./interfaces";
-import { join } from "./path";
-import type { Provider } from "./providers";
 
 interface AuthConfig {
   providers: Provider[];
