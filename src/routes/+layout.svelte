@@ -1,3 +1,11 @@
+<script lang="ts">
+	
+	import { signOut as authSignOut } from "sk-auth/client";
+  
+	function signOut() {
+	  authSignOut().then(session.set);
+	}
+  </script>
 <script>
 	import Header from './Header.svelte';
 	import './styles.css';
