@@ -3,35 +3,11 @@ import * as Bindings from '@nebhale/service-bindings';
 import type { OAuth2Provider } from "sk-auth/dist/providers";
 import type { Handle } from "@sveltejs/kit";
 
-export const handle: Handle = async ({ event, resolve }) => {    
-  
-  
-    const response = await resolve(event);
-  
-    return response;
-  };
+
 
 export const appAuth = new SvelteKitAuth({
-
-    providers: [await authInfo()],
-    callbacks: {
-        jwt(token, profile) {
-            if (profile?.provider) {
-                const { provider, ...account } = profile;
-                token = {
-                    ...token,
-                    user: {
-                        ...(token.user ?? {}),
-                        connections: { ...(token.user?.connections ?? {}), [provider]: account },
-                    },
-                };
-            }
-
-            return token;
-        },
-    },
-    jwtSecret: import.meta.env.VITE_JWT_SECRET_KEY,
-})
+	providers: [await authInfo()]
+});
 
 
 
