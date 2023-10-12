@@ -25,6 +25,7 @@
 	"type": "module",
 	"dependencies": {
 		"@nebhale/service-bindings": "^1.1.0",
-		"oracledb": "^6.1.0"
+		"oracledb": "^6.1.0",
+		"sk-auth": "^0.4.1"
 	}
 }
